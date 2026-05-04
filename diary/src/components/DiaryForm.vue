@@ -9,6 +9,12 @@
 
     /* körs när formuläret skickas */
     function submitPost() {
+        /* alla fält måste fyllas i */
+        if (!title.value || !date.value || !text.value) {
+        alert("Fyll i alla fält");
+        return; 
+        }
+
         emit("add-post", {
             title: title.value,
             date: date.value,

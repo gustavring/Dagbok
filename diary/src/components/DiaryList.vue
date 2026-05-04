@@ -2,19 +2,28 @@
   defineProps({
     posts: Array
   });
+
+  const emit = defineEmits(["delete-post"]);
 </script>
 
 <template>
+  <hr>
   <section>
     <h2>Inlägg</h2>
 
     <p class="no-posts" v-if="posts.length === 0">Inga inlägg finns ännu</p> <!-- om listan är tom -->
 
     <article v-for="post in posts" :key="post.title"> <!-- loopar igenom alla inlägg -->
-      <h3>{{ post.title }}</h3>
+      <div class="post-header">
+        <h3>{{ post.title }}</h3>
+
+        <button class="delete-btn" @click="emit('delete-post', post.id)">
+          ⨯
+        </button>
+      </div>
       <p>{{ post.date }}</p>
       <p>{{ post.text }}</p>
-      <hr /> <!-- linje mellan alla inlägg -->
+      <hr />
     </article>
   </section>
 </template>
@@ -24,6 +33,32 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
+  }
+
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: aquamarine;
+  }
+
+  .delete-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: none;
+    font-size: 26px;
+    color: rgb(170, 11, 11);
+  }
+
+  .delete-btn:hover {
+    color: rgb(206, 15, 15);
+    transform: scale(1.1);
+  }
+
+  .delete-btn:active {
+    color: rgb(102, 6, 6);
+    transform: scale(0.9);
   }
 
   h2 {
@@ -36,7 +71,7 @@
   }
 
   article {
-    background: #e3e3e4;
+    background: #f7f7f7;
     padding: 15px;
     border-radius: 8px;
 
